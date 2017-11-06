@@ -224,14 +224,15 @@ Public Class formMainAdmin
 
 
     Private Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
+        formEmployee.Dispose()
         formAddEmployee.ShowDialog()
-        Exit Sub
     End Sub
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
         formAddProduct.Dispose()
         formAddProduct.ShowDialog()
     End Sub
     Private Sub btnAddSupplier_Click(sender As Object, e As EventArgs) Handles btnAddSupplier.Click
+        formAddSupplier.Dispose()
         formAddSupplier.ShowDialog()
     End Sub
 
@@ -362,9 +363,8 @@ Public Class formMainAdmin
 
 
         xl = CreateObject("Excel.Application")
-        xlwbook = xl.Workbooks.OpenXML(Application.StartupPath & "\ect-excel-format-report.xlsx")
+        xlwbook = xl.Workbooks.Add(Application.StartupPath & "\ect-excel-format-report.xlsx")
         xlwsheet = xlwbook.Sheets("Sheet2")
-
 
 
         xlwsheet.Cells(3, 1) = "DAILY REPORT: " + Format(Now, "MM-dd-yyyy")
@@ -520,6 +520,7 @@ Public Class formMainAdmin
         ''  Will report the date of the day if 'Month' or 'Year' selected on reports
         If comboSelectedReport.SelectedIndex.Equals(0) Then
             txtSelectedSearch = comboSearchMonth.SelectedItem + "/" + txtSearchDay + "/" + txtSearchYear
+            txtSpecificDate = txtSearchMonth.ToString + "/" + txtSearchDay.ToString + "/" + txtSearchYear.ToString
 
         ElseIf comboSelectedReport.SelectedIndex.Equals(2) Then
             txtSelectedSearch = comboSearchMonth.SelectedItem + "-" + txtSearchYear
@@ -529,7 +530,6 @@ Public Class formMainAdmin
         ''  Convert selected abbreviation of "Month" to number
         xdate = txtSelectedSearch
         txtSearchMonth = DatePart("m", xdate)
-        txtSpecificDate = txtSearchMonth.ToString + "/" + txtSearchDay.ToString + "/" + txtSearchYear.ToString
         txtSearchDate = txtSearchMonth.ToString + "/_%_%/" + txtSearchYear.ToString
 
 

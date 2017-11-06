@@ -7,7 +7,7 @@
     Public discountName As String = ""
     Public discountType As String = ""
     Public discountNo As String = ""
-    Sub refresh()
+    Sub refreshProductItems()
         Try
             rs = New ADODB.Recordset
 
@@ -39,12 +39,12 @@
 
     Private Sub formMainPos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         timerClock.Start()
-        refresh()
+        refreshProductItems()
     End Sub
 
 
     Private Sub timerClock_Tick(sender As Object, e As EventArgs) Handles timerClock.Tick
-        labelTime.Text = Format(Now, "yyyy-MM-dd  hh:mm:ss tt")
+        labelTime.Text = Format(Now, "yyyy-MM-dd   hh:mm:ss tt")
     End Sub
 
 

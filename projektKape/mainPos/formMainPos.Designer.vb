@@ -40,6 +40,8 @@ Partial Class formMainPos
         Me.listBuy = New System.Windows.Forms.ListView()
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -49,7 +51,6 @@ Partial Class formMainPos
         Me.labelTotalPrice = New System.Windows.Forms.Label()
         Me.labelTempTotal = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -195,8 +196,8 @@ Partial Class formMainPos
         '
         'listBuy
         '
-        Me.listBuy.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader13})
-        Me.listBuy.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.listBuy.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader11, Me.ColumnHeader7, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader13})
+        Me.listBuy.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.listBuy.FullRowSelect = True
         Me.listBuy.GridLines = True
         Me.listBuy.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
@@ -215,7 +216,17 @@ Partial Class formMainPos
         'ColumnHeader6
         '
         Me.ColumnHeader6.Text = "BrandName"
-        Me.ColumnHeader6.Width = 280
+        Me.ColumnHeader6.Width = 132
+        '
+        'ColumnHeader11
+        '
+        Me.ColumnHeader11.Text = "GenericName"
+        Me.ColumnHeader11.Width = 174
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "SRP"
+        Me.ColumnHeader7.Width = 81
         '
         'ColumnHeader9
         '
@@ -243,7 +254,6 @@ Partial Class formMainPos
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.Color.Transparent
         Me.Label3.Location = New System.Drawing.Point(29, 535)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(81, 21)
@@ -274,7 +284,6 @@ Partial Class formMainPos
         '
         Me.labelTempTotal.AutoSize = True
         Me.labelTempTotal.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.labelTempTotal.ForeColor = System.Drawing.Color.Transparent
         Me.labelTempTotal.Location = New System.Drawing.Point(334, 536)
         Me.labelTempTotal.Name = "labelTempTotal"
         Me.labelTempTotal.Size = New System.Drawing.Size(40, 21)
@@ -290,11 +299,6 @@ Partial Class formMainPos
         Me.GroupBox1.Size = New System.Drawing.Size(444, 103)
         Me.GroupBox1.TabIndex = 32
         Me.GroupBox1.TabStop = False
-        '
-        'ColumnHeader7
-        '
-        Me.ColumnHeader7.Text = "SRP"
-        Me.ColumnHeader7.Width = 100
         '
         'formMainPos
         '
@@ -342,6 +346,7 @@ Partial Class formMainPos
     Friend WithEvents listBuy As ListView
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents ColumnHeader6 As ColumnHeader
+    Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
@@ -350,8 +355,8 @@ Partial Class formMainPos
     Friend WithEvents ColumnHeader8 As ColumnHeader
     Friend WithEvents ColumnHeader9 As ColumnHeader
     Friend WithEvents ColumnHeader10 As ColumnHeader
+    Friend WithEvents ColumnHeader11 As ColumnHeader
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents ColumnHeader12 As ColumnHeader
     Friend WithEvents ColumnHeader13 As ColumnHeader
-    Friend WithEvents ColumnHeader7 As ColumnHeader
 End Class
