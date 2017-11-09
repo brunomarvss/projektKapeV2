@@ -33,7 +33,7 @@
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -105,7 +105,7 @@
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -137,7 +137,7 @@
             Next
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -195,7 +195,7 @@
 
     Private Sub listBuy_DoubleClick(sender As Object, e As EventArgs) Handles listBuy.DoubleClick
 
-        Dim result As Integer = MessageBox.Show("DO YOU WANT TO DELETE THIS ITEM?", "ECT Pharmacy", MessageBoxButtons.YesNo)
+        Dim result As Integer = MsgBox("DO YOU WANT TO DELETE THIS ITEM?", "ECT Pharmacy", MessageBoxButtons.YesNo)
         If result = DialogResult.Yes Then
             'MsgBox(listBuy.FocusedItem.Index)
             subTotal = Val(labelTempTotal.Text) - Val(listBuy.Items(listBuy.FocusedItem.Index).SubItems(3).Text)

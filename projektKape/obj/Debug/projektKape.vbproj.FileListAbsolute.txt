@@ -262,6 +262,7 @@ C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\bi
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\bin\Debug\MetroFramework.Design.dll
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\bin\Debug\MetroFramework.dll
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.vbprojResolveAssemblyReference.cache
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\Interop.ADODB.dll
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\Interop.ADOR.dll
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\Interop.AZROLESLib.dll
@@ -283,4 +284,3 @@ C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\ob
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.exe
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.xml
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.pdb
-C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.vbprojResolveAssemblyReference.cache

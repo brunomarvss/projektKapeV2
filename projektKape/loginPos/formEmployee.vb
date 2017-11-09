@@ -18,7 +18,7 @@
             Next
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 

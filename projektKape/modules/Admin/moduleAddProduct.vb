@@ -1,5 +1,13 @@
 ﻿
 Module moduleAddProduct
+    Sub ResetDefaultdSuppliers()
+        formAddProduct.txtBrand.Text = "Brand Name"
+        formAddProduct.txtGeneric.Text = "Generic Name"
+        formAddProduct.txtQty.Text = "Item Quantity"
+        formAddProduct.txtRawPrice.Text = "Raw Price"
+        formAddProduct.txtSRP.Text = "SRP"
+    End Sub
+
     Sub LoadRegisteredSuppliers()
         Try
             rs = New ADODB.Recordset
@@ -10,90 +18,92 @@ Module moduleAddProduct
 
                 '''''''''''''''''''''''''Select employee data only on the database'''''''''''''''''''''''''
                 formAddProduct.comboSupplierList.Items.Clear()
-                formAddProduct.comboSupplierIDs.Items.Clear()
                 formAddProduct.comboSupplierList.Items.Add("(Select One Supplier)")
-                formAddProduct.comboSupplierIDs.Items.Add("(Select One Supplier)")
 
                 While .EOF = False
                     formAddProduct.comboSupplierList.Items.Add(.Fields("Company").Value)
-                    formAddProduct.comboSupplierIDs.Items.Add(.Fields("ID").Value)
                     .MoveNext()
                 End While
                 .Close()
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
+
     Sub AddNewProduct()
         ''  Declares the variable only on adding employees
         Dim getBrand = "", getGeneric = "", getQty = "", getSupplier = "", getRawPrice = "", getSRP As String = ""
         Dim setBrand = "", setGeneric = "", setQty = "", setSupplier = "", setRawPrice = "", setSRP As String = ""
-        Dim selectedSupplier As Integer = formAddProduct.comboSupplierList.SelectedIndex
-        Dim selectedSupplierID As String = formAddProduct.comboSupplierIDs.Items.Item(selectedSupplier)
+
+        ''  Initialize declared variables
+        getSupplier = formAddProduct.comboSupplierList.SelectedItem.ToString
+
+        getBrand = formAddProduct.txtBrand.Text.Trim
+        getGeneric = formAddProduct.txtGeneric.Text.Trim
+        getQty = formAddProduct.txtQty.Text.Trim
+
+        getRawPrice = formAddProduct.txtRawPrice.Text.Trim
+        getSRP = formAddProduct.txtSRP.Text.Trim
 
 
+        ''  Restrictions on text fields
+        If getBrand = "Brand Name" Or getGeneric = "Generic Name" Or getQty = "Item Quantity" Or getSupplier = "(Select One Supplier)" Or getRawPrice = "Raw Price" Or getSRP = "SRP" Then
+            MsgBox("You must fill up all fields before you commit saving of data/s", vbCritical, "Error")
+            Exit Sub
+
+        Else
+
+            setBrand = getBrand
+            setGeneric = getGeneric
+            setQty = getQty
+            setSupplier = getSupplier
+            setRawPrice = getRawPrice
+            setSRP = getSRP
+        End If
+
+
+
+        ''  Process after passing on restrictions
         Try
             rs = New ADODB.Recordset
 
-            ''  Initialize declared variables
-            getSupplier = formAddProduct.comboSupplierList.SelectedItem.ToString
-
-            getBrand = formAddProduct.txtBrand.Text.Trim
-            getGeneric = formAddProduct.txtGeneric.Text.Trim
-            getQty = formAddProduct.txtQty.Text.Trim
-
-            getRawPrice = formAddProduct.txtRawPrice.Text.Trim
-            getSRP = formAddProduct.txtSRP.Text.Trim
-
-
-            ''  Check if any text fields have no applicable record
-            If Not getBrand = "Brand Name" Then
-                setBrand = getBrand
-            End If
-
-            If Not getGeneric = "Generic Name" Then
-                setGeneric = getGeneric
-            End If
-
-            If Not getQty = "Quantity" Then
-                setQty = getQty
-            End If
-
-            If Not getSupplier = "(Select One Supplier)" Then
-                setSupplier = getSupplier
-            End If
-
-            If Not getRawPrice = "Raw Price" Then
-                setRawPrice = getRawPrice
-            End If
-
-            If Not getSRP = "SRP" Then
-                setSRP = getSRP
-            End If
-
-
             With rs
+                ''  Check if new product information is unique
+                If .State <> 0 Then .Close()
+                .Open("SELECT BrandName FROM Products WHERE BrandName ='" + setBrand + "';", cn, 1, 2)
+
+                If .EOF = False Then
+                    MsgBox("This product was already registered, product brand name must be no items matched on registered items")
+                    Exit Sub
+                End If
+
+                ''  Get coresponding ID value for selected company name
+                If .State <> 0 Then .Close()
+                .Open("SELECT ID FROM Suppliers WHERE Company ='" + getSupplier + "';", cn, 1, 2)
+
+                If .EOF = False Then
+                    setSupplier = .Fields("ID").Value
+                End If
+
+                ''  Set values from desire input of user
                 If .State <> 0 Then .Close()
                 .Open("INSERT INTO Products (BrandName, GenericName, RawPrice, SRP, Supplier_ID)" +
-                      "VALUES ('" + setBrand + "', '" + setGeneric + "', '" + setRawPrice + "', '" + setSRP + "', '" + selectedSupplierID + "');", cn, 1, 2)
+                      "VALUES ('" + setBrand + "', '" + setGeneric + "', '" + Format(Val(setRawPrice), "0.00") + "', '" + Format(Val(setSRP), "0.00") + "', '" + setSupplier + "');", cn, 1, 2)
 
+                ''  Set values of items available for notification on dashboard
                 If .State <> 0 Then .Close()
-                .Open("INSERT INTO Inventory (Available, CurrentLevel)" +
+                .Open("INSERT INTO Inventory (InitialLevel, CurrentLevel)" +
                       "VALUES ('" + setQty + "','" + setQty + "');", cn, 1, 2)
 
-                ''  Insert product data on the database
                 MsgBox("Saving Successful!", MsgBoxStyle.Information, "Record Saved")
-                formAddProduct.txtBrand.Text = Nothing
-                formAddProduct.txtGeneric.Text = Nothing
-                formAddProduct.txtQty.Text = Nothing
-                formAddProduct.txtRawPrice.Text = Nothing
-                formAddProduct.txtSRP.Text = Nothing
+                Call ResetDefaultdSuppliers()
+                formAddProduct.comboSupplierList.SelectedIndex = 0
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 End Module

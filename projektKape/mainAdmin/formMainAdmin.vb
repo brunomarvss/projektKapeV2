@@ -80,7 +80,7 @@ Public Class formMainAdmin
         If comboSearchProduct.SelectedIndex.Equals(0) Then
             selectedSearchType = "WHERE Products.BrandName LIKE '%" + txtSearch + "%'"
         ElseIf comboSearchProduct.SelectedIndex.Equals(1) Then
-            selectedSearchType = "WHERE Inventory.Available LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Inventory.CurrentLevel LIKE '%" + txtSearch + "%'"
         ElseIf comboSearchProduct.SelectedIndex.Equals(2) Then
             selectedSearchType = "WHERE Suppliers.Company LIKE '%" + txtSearch + "%'"
         ElseIf comboSearchProduct.SelectedIndex.Equals(3) Then
@@ -94,7 +94,7 @@ Public Class formMainAdmin
 
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT Products.*, Suppliers.*, Inventory.Available " +
+                .Open("SELECT Products.*, Suppliers.*, Inventory.CurrentLevel " +
                       "FROM ((Products " +
                       "INNER JOIN Inventory ON Products.ID=Inventory.ID) " +
                       "INNER JOIN Suppliers ON Products.Supplier_ID=Suppliers.ID) " +
@@ -110,7 +110,7 @@ Public Class formMainAdmin
                     listItems = listProducts.Items.Add(.Fields("Products.ID").Value)
                     listItems.SubItems.Insert(1, New ListViewItem.ListViewSubItem(Nothing, .Fields("BrandName").Value))
                     listItems.SubItems.Insert(2, New ListViewItem.ListViewSubItem(Nothing, .Fields("GenericName").Value))
-                    listItems.SubItems.Insert(3, New ListViewItem.ListViewSubItem(Nothing, .Fields("Available").Value))
+                    listItems.SubItems.Insert(3, New ListViewItem.ListViewSubItem(Nothing, .Fields("CurrentLevel").Value))
                     listItems.SubItems.Insert(4, New ListViewItem.ListViewSubItem(Nothing, .Fields("Company").Value))
                     listItems.SubItems.Insert(5, New ListViewItem.ListViewSubItem(Nothing, .Fields("RawPrice").Value))
                     listItems.SubItems.Insert(6, New ListViewItem.ListViewSubItem(Nothing, .Fields("SRP").Value))
@@ -120,7 +120,7 @@ Public Class formMainAdmin
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -161,7 +161,7 @@ Public Class formMainAdmin
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -211,7 +211,7 @@ Public Class formMainAdmin
             End With
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
     End Sub
 
@@ -222,7 +222,7 @@ Public Class formMainAdmin
     End Sub
 
 
-
+    ''  Event for addition of items/products etc.  ''
     Private Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
         formEmployee.Dispose()
         formAddEmployee.ShowDialog()
@@ -272,13 +272,13 @@ Public Class formMainAdmin
 
         ''  Restriction upon selections of user
         If (String.IsNullOrEmpty(comboSelectedReport.SelectedItem)) Then
-            MessageBox.Show("Select range/specific report to be generated first")
+            MsgBox("Select range/specific report to be generated first")
             Exit Sub
 
         Else
             If comboSelectedReport.SelectedIndex.Equals(0) Then
                 If ((String.IsNullOrEmpty(comboSearchDay.SelectedItem)) Or (String.IsNullOrEmpty(comboSearchMonth.SelectedItem)) Or (String.IsNullOrEmpty(comboSearchYear.SelectedItem))) Then
-                    MessageBox.Show("Please select specific date you want to generate on 'View Reports' first")
+                    MsgBox("Please select specific date you want to generate on 'View Reports' first")
                     Exit Sub
 
                 Else
@@ -289,7 +289,7 @@ Public Class formMainAdmin
 
             ElseIf comboSelectedReport.SelectedIndex.Equals(2) Then
                 If ((String.IsNullOrEmpty(comboSearchMonth.SelectedItem)) Or (String.IsNullOrEmpty(comboSearchYear.SelectedItem))) Then
-                    MessageBox.Show("Please select specific date of month and year you want to generate on 'View Reports' first")
+                    MsgBox("Please select specific date of month and year you want to generate on 'View Reports' first")
                     Exit Sub
 
                 Else
@@ -300,7 +300,7 @@ Public Class formMainAdmin
 
             ElseIf comboSelectedReport.SelectedIndex.Equals(3) Then
                 If (String.IsNullOrEmpty(comboSearchYear.SelectedItem)) Then
-                    MessageBox.Show("Please select specific date of year you want to generate on 'View Reports' first")
+                    MsgBox("Please select specific date of year you want to generate on 'View Reports' first")
                     Exit Sub
 
                 End If
@@ -383,7 +383,7 @@ Public Class formMainAdmin
                       txtSelectedSearch, cn, 1, 2)
 
                 If .EOF = True Then
-                    MessageBox.Show("Requested date of report does not exist")
+                    MsgBox("Requested date of report does not exist")
                     Exit Sub
                 End If
 
@@ -508,7 +508,7 @@ Public Class formMainAdmin
             xl.Quit()
 
         Catch ex As Exception
-            MessageBox.Show(ex.ToString)
+            MsgBox(ex.ToString)
         End Try
 
     End Sub
