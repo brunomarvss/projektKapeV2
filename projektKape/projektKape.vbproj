@@ -90,22 +90,22 @@
     <Compile Include="loginPos\formEmployee.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainAdmin\formAddEmployee.Designer.vb">
+    <Compile Include="mainAdmin\Add\formAddEmployee.Designer.vb">
       <DependentUpon>formAddEmployee.vb</DependentUpon>
     </Compile>
-    <Compile Include="mainAdmin\formAddEmployee.vb">
+    <Compile Include="mainAdmin\Add\formAddEmployee.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainAdmin\formAddProduct.Designer.vb">
+    <Compile Include="mainAdmin\Add\formAddProduct.Designer.vb">
       <DependentUpon>formAddProduct.vb</DependentUpon>
     </Compile>
-    <Compile Include="mainAdmin\formAddProduct.vb">
+    <Compile Include="mainAdmin\Add\formAddProduct.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainAdmin\formAddSupplier.Designer.vb">
+    <Compile Include="mainAdmin\Add\formAddSupplier.Designer.vb">
       <DependentUpon>formAddSupplier.vb</DependentUpon>
     </Compile>
-    <Compile Include="mainAdmin\formAddSupplier.vb">
+    <Compile Include="mainAdmin\Add\formAddSupplier.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mainAdmin\formInventoryDetails.Designer.vb">
@@ -118,6 +118,24 @@
       <DependentUpon>formMainAdmin.vb</DependentUpon>
     </Compile>
     <Compile Include="mainAdmin\formMainAdmin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateEmployee.Designer.vb">
+      <DependentUpon>formUpdateEmployee.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateEmployee.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateProduct.Designer.vb">
+      <DependentUpon>formUpdateProduct.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateProduct.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateSupplier.Designer.vb">
+      <DependentUpon>formUpdateSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mainAdmin\Update\formUpdateSupplier.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="mainPos\formCashTender.Designer.vb">
@@ -186,13 +204,13 @@
     <EmbeddedResource Include="loginPos\formLogin.resx">
       <DependentUpon>formLogin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainAdmin\formAddEmployee.resx">
+    <EmbeddedResource Include="mainAdmin\Add\formAddEmployee.resx">
       <DependentUpon>formAddEmployee.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainAdmin\formAddProduct.resx">
+    <EmbeddedResource Include="mainAdmin\Add\formAddProduct.resx">
       <DependentUpon>formAddProduct.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainAdmin\formAddSupplier.resx">
+    <EmbeddedResource Include="mainAdmin\Add\formAddSupplier.resx">
       <DependentUpon>formAddSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainAdmin\formInventoryDetails.resx">
@@ -200,6 +218,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mainAdmin\formMainAdmin.resx">
       <DependentUpon>formMainAdmin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainAdmin\Update\formUpdateEmployee.resx">
+      <DependentUpon>formUpdateEmployee.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainAdmin\Update\formUpdateProduct.resx">
+      <DependentUpon>formUpdateProduct.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainPos\formCashTender.resx">
       <DependentUpon>formCashTender.vb</DependentUpon>
@@ -292,6 +316,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

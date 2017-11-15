@@ -24,7 +24,7 @@
         My.Forms.formCashTender.txtBoxPayment.Text = "0.00"
         Me.Close()
         My.Forms.formCashTender.Close()
-
+        My.Forms.formMainPos.refreshProductItems()
 
     End Sub
 End Class

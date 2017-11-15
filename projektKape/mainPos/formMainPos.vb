@@ -13,7 +13,7 @@
 
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT Products.*, Inventory.Available " +
+                .Open("SELECT Products.*, Inventory.CurrentLevel " +
                       "FROM Products " +
                       "INNER JOIN Inventory ON Products.ID=Inventory.ID;", cn, 1, 2)
 
@@ -21,7 +21,7 @@
                 listProducts.Items.Clear()
 
                 While .EOF = False
-                    listItems = listProducts.Items.Add(.Fields("Available").Value)
+                    listItems = listProducts.Items.Add(.Fields("CurrentLevel").Value)
                     listItems.SubItems.Insert(1, New ListViewItem.ListViewSubItem(Nothing, .Fields("BrandName").Value))
                     listItems.SubItems.Insert(2, New ListViewItem.ListViewSubItem(Nothing, .Fields("GenericName").Value))
                     listItems.SubItems.Insert(3, New ListViewItem.ListViewSubItem(Nothing, .Fields("SRP").Value))
@@ -81,7 +81,7 @@
 
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT Products.*, Inventory.Available " +
+                .Open("SELECT Products.*, Inventory.CurrentLevel " +
                       "FROM Products " +
                       "INNER JOIN Inventory ON Products.ID=Inventory.ID " +
                       "WHERE Products.BrandName LIKE '%" + txtSearchProduct.Text.Trim + "%' OR Products.GenericName LIKE '%" + txtSearchProduct.Text.Trim + "%'", cn, 1, 2)
@@ -93,7 +93,7 @@
                 listProducts.Items.Clear()
 
                 While .EOF = False
-                    listItems = listProducts.Items.Add(.Fields("Available").Value)
+                    listItems = listProducts.Items.Add(.Fields("CurrentLevel").Value)
                     listItems.SubItems.Insert(1, New ListViewItem.ListViewSubItem(Nothing, .Fields("BrandName").Value))
                     listItems.SubItems.Insert(2, New ListViewItem.ListViewSubItem(Nothing, .Fields("GenericName").Value))
                     listItems.SubItems.Insert(3, New ListViewItem.ListViewSubItem(Nothing, .Fields("SRP").Value))
@@ -195,7 +195,7 @@
 
     Private Sub listBuy_DoubleClick(sender As Object, e As EventArgs) Handles listBuy.DoubleClick
 
-        Dim result As Integer = MsgBox("DO YOU WANT TO DELETE THIS ITEM?", "ECT Pharmacy", MessageBoxButtons.YesNo)
+        Dim result As Integer = MessageBox.Show("DO YOU WANT TO DELETE THIS ITEM?", "ECT Pharmacy", MessageBoxButtons.YesNo)
         If result = DialogResult.Yes Then
             'MsgBox(listBuy.FocusedItem.Index)
             subTotal = Val(labelTempTotal.Text) - Val(listBuy.Items(listBuy.FocusedItem.Index).SubItems(3).Text)

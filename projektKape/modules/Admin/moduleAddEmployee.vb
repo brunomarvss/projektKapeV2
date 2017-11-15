@@ -1,4 +1,16 @@
 ﻿Module moduleAddEmployee
+    Sub ResetDefaultEmployeeTextFields()
+        formUpdateEmployee.txtJobTitle.Text = "Work Title"
+        formUpdateEmployee.txtLname.Text = "Last Name"
+        formUpdateEmployee.txtFname.Text = "First Name"
+        formUpdateEmployee.txtMname.Text = "Middle Name"
+        formUpdateEmployee.txtSuffix.Text = "Suffix e.g. (Jr.)"
+        formUpdateEmployee.txtContact.Text = "Contact Number"
+        formUpdateEmployee.txtAddress.Text = "Address Details"
+        formUpdateEmployee.txtCity.Text = "City"
+        formUpdateEmployee.txtProvince.Text = "Province"
+    End Sub
+
     Sub AddNewEmployee()
         ''  Declares the variable only on adding employees
         Dim getLname = "", getMname = "", getFname = "", getSuffix = "", getContact = "", getAddress = "", getCity = "", getProvince = "", getJob As String = ""
@@ -8,57 +20,51 @@
             rs = New ADODB.Recordset
 
             ''  Initialize declared variables
-            getJob = formAddEmployee.txtJobTitle.text.trim
+            getJob = formUpdateEmployee.txtJobTitle.Text.Trim
 
-            getLname = formAddEmployee.txtLname.Text.Trim
-            getMname = formAddEmployee.txtMname.Text.Trim
-            getFname = formAddEmployee.txtFname.Text.Trim
-            getSuffix = formAddEmployee.txtSuffix.Text.Trim
+            getLname = formUpdateEmployee.txtLname.Text.Trim
+            getMname = formUpdateEmployee.txtMname.Text.Trim
+            getFname = formUpdateEmployee.txtFname.Text.Trim
+            getSuffix = formUpdateEmployee.txtSuffix.Text.Trim
 
-            getContact = formAddEmployee.txtContact.Text.Trim
-            getAddress = formAddEmployee.txtAddress.Text.Trim
-            getCity = formAddEmployee.txtCity.Text.Trim
-            getProvince = formAddEmployee.txtProvince.Text.Trim
+            getContact = formUpdateEmployee.txtContact.Text.Trim
+            getAddress = formUpdateEmployee.txtAddress.Text.Trim
+            getCity = formUpdateEmployee.txtCity.Text.Trim
+            getProvince = formUpdateEmployee.txtProvince.Text.Trim
 
 
             ''  Check if any text fields have no applicable record
-            If Not getJob = "Work Title" Then
+            If getJob = "Work Title" Or getLname = "Last Name" Or getFname = "First Name" Or getContact = "Contact Number" Or getAddress = "Address Details" Or getCity = "City" Or getProvince = "State/Province" Then
+                MsgBox("You must fill up all fields before you commit saving of data/s", vbCritical, "Error")
+                Exit Sub
+
+            Else
+
                 setJob = getJob
-            End If
-
-            If Not getLname = "Last Name" Then
                 setLname = getLname
-            End If
-
-            If Not getFname = "First Name" Then
                 setFname = getFname
-            End If
-
-            If Not getMname = "Middle Name" Then
-                setMname = getMname
-            End If
-
-            If Not getSuffix = "Suffix" Then
-                setSuffix = getSuffix
-            End If
-
-            If Not getContact = "Contact Number" Then
                 setContact = getContact
-            End If
-
-            If Not getAddress = "Address Details" Then
                 setAddress = getAddress
-            End If
-
-
-            If Not getCity = "City" Then
                 setCity = getCity
-            End If
-
-            If Not getProvince = "State/Province" Then
                 setProvince = getProvince
             End If
 
+            ''  If necessary name of people have suffix or middle name on their name or nothing
+            If getSuffix = "Suffix e.g. (Jr.)" Then
+                setSuffix = "<N/A>"
+            Else
+                setSuffix = getSuffix
+            End If
+
+            If getMname = "Middle Name" Then
+                setMname = "<N/A>"
+            Else
+                setMname = getMname
+            End If
+
+
+
+            ''  Process after passing on restrictions
 
             With rs
                 If .State <> 0 Then .Close()
@@ -68,6 +74,7 @@
 
                 '''''''''''''''''''''''''Insert employee data on the database'''''''''''''''''''''''''
                 MsgBox("Saving Successful!", MsgBoxStyle.Information, "Record Saved")
+                Call ResetDefaultEmployeeTextFields()
             End With
 
         Catch ex As Exception

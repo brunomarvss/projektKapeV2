@@ -1,6 +1,6 @@
 ﻿
 Module moduleAddProduct
-    Sub ResetDefaultdSuppliers()
+    Sub ResetDefaultdProductTextFields()
         formAddProduct.txtBrand.Text = "Brand Name"
         formAddProduct.txtGeneric.Text = "Generic Name"
         formAddProduct.txtQty.Text = "Item Quantity"
@@ -14,7 +14,7 @@ Module moduleAddProduct
 
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT * FROM Suppliers;", cn, 1, 2)
+                .Open("SELECT * FROM Suppliers ORDER BY Company;", cn, 1, 2)
 
                 '''''''''''''''''''''''''Select employee data only on the database'''''''''''''''''''''''''
                 formAddProduct.comboSupplierList.Items.Clear()
@@ -24,6 +24,8 @@ Module moduleAddProduct
                     formAddProduct.comboSupplierList.Items.Add(.Fields("Company").Value)
                     .MoveNext()
                 End While
+
+                formAddProduct.comboSupplierList.SelectedIndex = 0
                 .Close()
             End With
 
@@ -37,37 +39,38 @@ Module moduleAddProduct
         Dim getBrand = "", getGeneric = "", getQty = "", getSupplier = "", getRawPrice = "", getSRP As String = ""
         Dim setBrand = "", setGeneric = "", setQty = "", setSupplier = "", setRawPrice = "", setSRP As String = ""
 
-        ''  Initialize declared variables
-        getSupplier = formAddProduct.comboSupplierList.SelectedItem.ToString
-
-        getBrand = formAddProduct.txtBrand.Text.Trim
-        getGeneric = formAddProduct.txtGeneric.Text.Trim
-        getQty = formAddProduct.txtQty.Text.Trim
-
-        getRawPrice = formAddProduct.txtRawPrice.Text.Trim
-        getSRP = formAddProduct.txtSRP.Text.Trim
-
-
-        ''  Restrictions on text fields
-        If getBrand = "Brand Name" Or getGeneric = "Generic Name" Or getQty = "Item Quantity" Or getSupplier = "(Select One Supplier)" Or getRawPrice = "Raw Price" Or getSRP = "SRP" Then
-            MsgBox("You must fill up all fields before you commit saving of data/s", vbCritical, "Error")
-            Exit Sub
-
-        Else
-
-            setBrand = getBrand
-            setGeneric = getGeneric
-            setQty = getQty
-            setSupplier = getSupplier
-            setRawPrice = getRawPrice
-            setSRP = getSRP
-        End If
-
-
-
-        ''  Process after passing on restrictions
         Try
             rs = New ADODB.Recordset
+
+            ''  Initialize declared variables
+            getSupplier = formAddProduct.comboSupplierList.SelectedItem.ToString
+
+            getBrand = formAddProduct.txtBrand.Text.Trim
+            getGeneric = formAddProduct.txtGeneric.Text.Trim
+            getQty = formAddProduct.txtQty.Text.Trim
+
+            getRawPrice = formAddProduct.txtRawPrice.Text.Trim
+            getSRP = formAddProduct.txtSRP.Text.Trim
+
+
+            ''  Restrictions on text fields
+            If getBrand = "Brand Name" Or getGeneric = "Generic Name" Or getQty = "Item Quantity" Or getSupplier = "(Select One Supplier)" Or getRawPrice = "Raw Price" Or getSRP = "SRP" Then
+                MsgBox("You must fill up all fields before you commit saving of data/s", vbCritical, "Error")
+                Exit Sub
+
+            Else
+
+                setBrand = getBrand
+                setGeneric = getGeneric
+                setQty = getQty
+                setSupplier = getSupplier
+                setRawPrice = getRawPrice
+                setSRP = getSRP
+            End If
+
+
+
+            ''  Process after passing on restrictions
 
             With rs
                 ''  Check if new product information is unique
@@ -92,13 +95,13 @@ Module moduleAddProduct
                 .Open("INSERT INTO Products (BrandName, GenericName, RawPrice, SRP, Supplier_ID)" +
                       "VALUES ('" + setBrand + "', '" + setGeneric + "', '" + Format(Val(setRawPrice), "0.00") + "', '" + Format(Val(setSRP), "0.00") + "', '" + setSupplier + "');", cn, 1, 2)
 
-                ''  Set values of items available for notification on dashboard
+                ''  Set values of items CurrentLevel for notification on dashboard
                 If .State <> 0 Then .Close()
                 .Open("INSERT INTO Inventory (InitialLevel, CurrentLevel)" +
                       "VALUES ('" + setQty + "','" + setQty + "');", cn, 1, 2)
 
                 MsgBox("Saving Successful!", MsgBoxStyle.Information, "Record Saved")
-                Call ResetDefaultdSuppliers()
+                Call ResetDefaultdProductTextFields()
                 formAddProduct.comboSupplierList.SelectedIndex = 0
             End With
 

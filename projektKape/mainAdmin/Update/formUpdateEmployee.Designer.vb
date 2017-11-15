@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class formAddEmployee
+Partial Class formUpdateEmployee
     Inherits MetroFramework.Forms.MetroForm
     'Inherits System.Windows.Forms.Form
 
@@ -181,7 +181,7 @@ Partial Class formAddEmployee
         Me.txtSuffix.CustomButton.Visible = False
         Me.txtSuffix.FontSize = MetroFramework.MetroTextBoxSize.Tall
         Me.txtSuffix.ForeColor = System.Drawing.Color.Red
-        Me.txtSuffix.Lines = New String() {"Suffix"}
+        Me.txtSuffix.Lines = New String() {"Suffix e.g. (Jr.)"}
         Me.txtSuffix.Location = New System.Drawing.Point(126, 388)
         Me.txtSuffix.Margin = New System.Windows.Forms.Padding(7, 5, 7, 5)
         Me.txtSuffix.MaxLength = 32767
@@ -195,7 +195,7 @@ Partial Class formAddEmployee
         Me.txtSuffix.ShortcutsEnabled = True
         Me.txtSuffix.Size = New System.Drawing.Size(186, 35)
         Me.txtSuffix.TabIndex = 4
-        Me.txtSuffix.Text = "Suffix"
+        Me.txtSuffix.Text = "Suffix e.g. (Jr.)"
         Me.txtSuffix.Theme = MetroFramework.MetroThemeStyle.Light
         Me.txtSuffix.UseSelectable = True
         Me.txtSuffix.UseStyleColors = True
@@ -478,7 +478,7 @@ Partial Class formAddEmployee
         Me.txtJobTitle.WaterMarkColor = System.Drawing.Color.FromArgb(CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer), CType(CType(109, Byte), Integer))
         Me.txtJobTitle.WaterMarkFont = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
         '
-        'formAddEmployee
+        'formUpdate2Employee
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -501,7 +501,7 @@ Partial Class formAddEmployee
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.MetroLabel2)
         Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.Name = "formAddEmployee"
+        Me.Name = "formUpdate2Employee"
         Me.Padding = New System.Windows.Forms.Padding(15, 60, 15, 16)
         Me.Text = "Add Employee"
         Me.ResumeLayout(False)

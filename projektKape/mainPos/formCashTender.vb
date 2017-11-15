@@ -61,7 +61,7 @@
                         remStock = Val(My.Forms.formMainPos.listBuy.Items(i).SubItems(5).Text) - Val(My.Forms.formMainPos.listBuy.Items(i).SubItems(0).Text)
 
                         .Open("UPDATE Inventory " +
-                          "SET Available='" + remStock + "', CurrentLevel='" + remStock + "' " +
+                          "SET CurrentLevel='" + remStock + "' " +
                           "WHERE ID=" + My.Forms.formMainPos.listBuy.Items(i).SubItems(4).Text + "", cn, 1, 2)
 
                         .Open("INSERT INTO CustomerRecord (CSR_ID,CSR_Item,CSR_GItem,CSR_Qty,CSR_DateOfSale,CSR_PaidPrice,CSR_TotalPrice,CSR_ItemRawPrice,CSR_ItemPrice,CSR_DiscountType,CSR_DiscName,CSR_DiscIdNo,CSR_TransactBy) " +
