@@ -2,9 +2,9 @@
 Imports System.Globalization
 
 Public Class formMainAdmin
-    Dim selectedSearchType As String
+    Dim selectedSearchType As String = ""
     Dim TimeValue As Decimal = 1000.0
-    Dim prodID = "", employeeID = "", supplierCompany As String = ""
+    Public prodID = "", prodQty = "", employeeID = "", supplierCompany As String = ""
     Dim getSuffix = "", setSuffix As String = ""
 
     ''  Declaration of values used on initialization of "EXCEL WORKBOOK"
@@ -42,6 +42,7 @@ Public Class formMainAdmin
         labelTimeAdmin.Text = Format(Now, "yyyy-MM-dd    hh:mm:ss")
     End Sub
 
+    ''  Update selected item on a list  ''
     Private Sub listProducts_DoubleClick(sender As Object, e As EventArgs) Handles listProducts.DoubleClick
         Try
             Dim item As ListView.SelectedListViewItemCollection = listProducts.SelectedItems
@@ -57,20 +58,18 @@ Public Class formMainAdmin
                 prodID = items.SubItems(i).Text
                 i += 1 : formUpdateProduct.txtBrand.Text = items.SubItems(i).Text
                 i += 1 : formUpdateProduct.txtGeneric.Text = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtQty.Text = items.SubItems(i).Text
+                i += 1 : prodQty = items.SubItems(i).Text
                 i += 1 : formUpdateProduct.txtSupplier.Text = items.SubItems(i).Text
                 i += 1 : formUpdateProduct.txtRawPrice.Text = items.SubItems(i).Text
                 i += 1 : formUpdateProduct.txtSRP.Text = items.SubItems(i).Text
             Next
 
             formUpdateProduct.ShowDialog()
-            'Call getProductData()
 
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
     End Sub
-
     Private Sub listEmployee_DoubleClick(sender As Object, e As EventArgs) Handles listEmployee.DoubleClick
         Try
             Dim item As ListView.SelectedListViewItemCollection = listEmployee.SelectedItems
@@ -83,14 +82,13 @@ Public Class formMainAdmin
                 employeeID = items.SubItems(i).Text
             Next
 
-            selectedSearchType = "AND ID =" + employeeID
+            selectedSearchType = "AND ID=" + employeeID
             Call getEmployeeData()
 
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
     End Sub
-
     Private Sub listSupplier_DoubleClick(sender As Object, e As EventArgs) Handles listSupplier.DoubleClick
         Try
             Dim item As ListView.SelectedListViewItemCollection = listSupplier.SelectedItems
@@ -108,9 +106,6 @@ Public Class formMainAdmin
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
-
-        formUpdateProduct.Dispose()
-        formUpdateProduct.ShowDialog()
     End Sub
 
 
@@ -122,6 +117,9 @@ Public Class formMainAdmin
         Timer.Start()
         TimerStats.Start()
         Call moduleAdminStatistics.evaluateDailySales()
+
+        ''  Close recent excel processes from "View Reports" Event triggered
+        Call connectionModule.TerminateExcel()
 
         ''  Refresh month to be choice by abbreviation
         comboSearchMonth.Items.Clear()
@@ -148,16 +146,22 @@ Public Class formMainAdmin
 
         ''  List all datas recorded on the database
         'refreshDashboard()
+        selectedSearchType = "ORDER BY Products.BrandName"
         refreshProductList()
+
+        selectedSearchType = "ORDER BY Employees.ID"
         refreshEmployeeList()
+
+        selectedSearchType = "ORDER BY Suppliers.ID"
         refreshSupplierList()
     End Sub
+
+
     Sub refreshDashboard()
         Dim dateString As String = "#09/03/2017#"
         'MsgBox(DateAndTime.Weekday(dateString))
         MsgBox(Format(Now, "yyyy"))
     End Sub
-
     Sub refreshProductList()
         Try
             rs = New ADODB.Recordset
@@ -175,6 +179,7 @@ Public Class formMainAdmin
 
                 '''''''''''''''''''''''''List all possible products search by employee'''''''''''''''''''''''''
                 listProducts.Items.Clear()
+                selectedSearchType = ""
 
                 While .EOF = False
                     listItems = listProducts.Items.Add(.Fields("Products.ID").Value)
@@ -193,7 +198,6 @@ Public Class formMainAdmin
             MsgBox(ex.ToString)
         End Try
     End Sub
-
     Sub refreshEmployeeList()
         Try
             rs = New ADODB.Recordset
@@ -205,6 +209,7 @@ Public Class formMainAdmin
 
                 ''  List all registered employee accounts from the database
                 listEmployee.Items.Clear()
+                selectedSearchType = ""
 
                 While .EOF = False
                     ''  Initials variable to clear recent value
@@ -232,16 +237,16 @@ Public Class formMainAdmin
             MsgBox(ex.ToString)
         End Try
     End Sub
-
     Sub refreshSupplierList()
         Try
             rs = New ADODB.Recordset
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT * FROM Suppliers " + txtSelectedSearch + ";", cn, 1, 2)
+                .Open("SELECT * FROM Suppliers " + selectedSearchType + ";", cn, 1, 2)
 
                 '''''''''''''''''''''''''Select supplier data only on the database'''''''''''''''''''''''''
                 listSupplier.Items.Clear()
+                selectedSearchType = ""
 
                 While .EOF = False
                     ''  Initials variable to clear recent value
@@ -269,42 +274,7 @@ Public Class formMainAdmin
         End Try
     End Sub
 
-    Sub getProductData()
-        ''  Declares the variable only on adding employees
-        Dim getBrand = "", getGeneric = "", getQty = "", getSupplier = "", getRawPrice = "", getSRP As String = ""
-        Dim setBrand = "", setGeneric = "", setQty = "", setSupplier = "", setRawPrice = "", setSRP As String = ""
 
-        Try
-            rs = New ADODB.Recordset
-
-            With rs
-                If .State <> 0 Then .Close()
-                .Open("SELECT Products.*, Suppliers.*, Inventory.CurrentLevel " +
-                      "FROM ((Products " +
-                      "INNER JOIN Inventory ON Products.ID=Inventory.ID) " +
-                      "INNER JOIN Suppliers ON Products.Supplier_ID=Suppliers.ID) " +
-                      "WHERE Products.ID =" + prodID + ";", cn, 1, 2)
-
-
-                If .EOF = False Then
-                    formUpdateProduct.txtBrand.Text = .Fields("BrandName").Value
-                    formUpdateProduct.txtGeneric.Text = .Fields("GenericName").Value
-                    formUpdateProduct.txtQty.Text = .Fields("CurrentLevel").Value
-                    'formUpdateProduct.comboSupplierList.Text = .Fields("Company").Value
-                    'formUpdateProduct.comboSupplierList.Enabled = False
-                    formUpdateProduct.txtRawPrice.Text = .Fields("RawPrice").Value
-                    formUpdateProduct.txtSRP.Text = .Fields("SRP").Value
-
-                    'formUpdateProduct.Dispose()
-                    formUpdateProduct.ShowDialog()
-                End If
-                .Close()
-            End With
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
     Sub getEmployeeData()
         ''  Declares the variable only on adding employees
         Dim getLname = "", getMname = "", getFname = "", getSuffix = "", getContact = "", getAddress = "", getCity = "", getProvince = "", getJob As String = ""
@@ -351,7 +321,7 @@ Public Class formMainAdmin
 
             With rs
                 If .State <> 0 Then .Close()
-                .Open("SELECT * FROM Suppliers " + txtSelectedSearch +
+                .Open("SELECT * FROM Suppliers " +
                       "WHERE Company ='" + supplierCompany + "';", cn, 1, 2)
 
 
@@ -412,6 +382,7 @@ Public Class formMainAdmin
     End Sub
     Private Sub txtSearchEmployee_Click(sender As Object, e As EventArgs) Handles txtSearchEmployee.Click
         txtSearchEmployee.SelectAll()
+        selectedSearchType = ""
 
         If comboSearchEmployee.SelectedIndex.Equals(0) Then
             MsgBox("Select specific category type first to be search", vbCritical, "Error")
@@ -438,28 +409,36 @@ Public Class formMainAdmin
         Dim txtSearch = txtSearchProduct.Text.Trim
 
         If comboSearchProduct.SelectedIndex.Equals(1) Then
-            selectedSearchType = "WHERE Products.BrandName LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Products.BrandName LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Products.BrandName"
         ElseIf comboSearchProduct.SelectedIndex.Equals(2) Then
-            selectedSearchType = "WHERE Inventory.CurrentLevel LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Inventory.CurrentLevel LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Products.BrandName"
         ElseIf comboSearchProduct.SelectedIndex.Equals(3) Then
-            selectedSearchType = "WHERE Suppliers.Company LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Suppliers.Company LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Products.BrandName"
         ElseIf comboSearchProduct.SelectedIndex.Equals(4) Then
-            selectedSearchType = "WHERE Products.SRP LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Products.SRP LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Products.BrandName"
         End If
 
-        refreshProductList()
+        Call refreshProductList()
     End Sub
     Private Sub txtSearchEmployee_TextChanged(sender As Object, e As EventArgs) Handles txtSearchEmployee.TextChanged
         Dim txtSearch = txtSearchEmployee.Text.Trim
 
         If comboSearchEmployee.SelectedIndex.Equals(1) Then
-            selectedSearchType = "AND (Address LIKE '%" + txtSearch + "%' OR City LIKE '%" + txtSearch + "%' OR Province LIKE '%" + txtSearch + "%')"
+            selectedSearchType = "AND (Address LIKE '%" + txtSearch + "%' OR City LIKE '%" + txtSearch + "%' OR Province LIKE '%" + txtSearch + "%') " +
+                                 "ORDER BY Employees.ID"
         ElseIf comboSearchEmployee.SelectedIndex.Equals(2) Then
-            selectedSearchType = "AND Contact LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "AND Contact LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Employees.ID"
         ElseIf comboSearchEmployee.SelectedIndex.Equals(3) Then
-            selectedSearchType = "AND JobTitle LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "AND JobTitle LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Employees.ID"
         ElseIf comboSearchEmployee.SelectedIndex.Equals(4) Then
-            selectedSearchType = "AND (LastName LIKE '%" + txtSearch + "%' OR Suffix LIKE '%" + txtSearch + "%' OR FirstName LIKE '%" + txtSearch + "%' OR MiddleName LIKE '%" + txtSearch + "%')"
+            selectedSearchType = "AND (LastName LIKE '%" + txtSearch + "%' OR Suffix LIKE '%" + txtSearch + "%' OR FirstName LIKE '%" + txtSearch + "%' OR MiddleName LIKE '%" + txtSearch + "%') " +
+                                 "ORDER BY Employees.ID"
         End If
 
         refreshEmployeeList()
@@ -468,39 +447,27 @@ Public Class formMainAdmin
         Dim txtSearch = txtSearchSupplier.Text.Trim
 
         If comboSearchSupplier.SelectedIndex.Equals(1) Then
-            selectedSearchType = "WHERE (Address LIKE '%" + txtSearch + "%' OR City LIKE '%" + txtSearch + "%' OR Province LIKE '%" + txtSearch + "%')"
+            selectedSearchType = "WHERE (Address LIKE '%" + txtSearch + "%' OR City LIKE '%" + txtSearch + "%' OR Province LIKE '%" + txtSearch + "%') " +
+                                 "ORDER BY Suppliers.ID"
         ElseIf comboSearchSupplier.SelectedIndex.Equals(2) Then
-            selectedSearchType = "WHERE Company LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Company LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Suppliers.ID"
         ElseIf comboSearchSupplier.SelectedIndex.Equals(3) Then
-            selectedSearchType = "WHERE Contact LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE Contact LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Suppliers.ID"
         ElseIf comboSearchSupplier.SelectedIndex.Equals(4) Then
-            selectedSearchType = "WHERE LastName LIKE '%" + txtSearch + "%' OR FirstName LIKE '%" + txtSearch + "%' OR Suffix LIKE '%" + txtSearch + "%'"
+            selectedSearchType = "WHERE LastName LIKE '%" + txtSearch + "%' OR FirstName LIKE '%" + txtSearch + "%' OR Suffix LIKE '%" + txtSearch + "%' " +
+                                 "ORDER BY Suppliers.ID"
         End If
 
         refreshSupplierList()
     End Sub
 
-    Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Int32
-    Declare Function PostMessage Lib "user32" Alias "PostMessageA" (ByVal hwnd As Int32, ByVal wMsg As Int32, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
 
-    Public Function TerminateExcel()
-
-        Dim ClassName As String = "XLMain"
-        Dim WindowHandle As Int32
-        Dim ReturnVal As Int32
-        Const WM_QUIT = &H12
-        Do
-            WindowHandle = FindWindow(ClassName, Nothing)
-            If WindowHandle Then
-                ReturnVal = PostMessage(WindowHandle, WM_QUIT, 0, 0)
-            End If
-        Loop Until WindowHandle = 0
-
-    End Function
 
     Private Sub btnViewReport_Click(sender As Object, e As EventArgs) Handles btnViewReport.Click
         ''  Close recent excel processes from "View Reports" Event triggered
-        Call TerminateExcel()
+        Call connectionModule.TerminateExcel()
 
         ''  Restriction upon selections of user
         If comboSelectedReport.SelectedIndex.Equals(0) Then

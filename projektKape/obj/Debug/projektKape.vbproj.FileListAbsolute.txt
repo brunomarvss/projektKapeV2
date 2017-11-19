@@ -284,6 +284,13 @@ C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\ob
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.exe
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.xml
 C:\Users\ASUS PC\Documents\Backup\Github\ECT PHARMACY\projektKape\projektKape\obj\Debug\projektKape.pdb
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.exe.config
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.exe
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.pdb
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.xml
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.Design.dll
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.dll
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.vbprojResolveAssemblyReference.cache
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\Interop.ADODB.dll
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\Interop.ADOR.dll
@@ -298,6 +305,7 @@ C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\proje
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formMainAdmin.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formUpdateEmployee.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formUpdateProduct.resources
+C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formUpdateSupplier.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formCashTender.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formChange.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formMainPos.resources
@@ -305,13 +313,6 @@ C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\proje
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.formSeniorDc.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.Resources.resources
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.vbproj.GenerateResource.Cache
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.exe.config
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.exe
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.pdb
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\projektKape.xml
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.Design.dll
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.dll
-C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.exe
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.xml
 C:\Users\ASUS PC\Documents\Backup\Github\projektKape\projektKape\obj\Debug\projektKape.pdb

@@ -150,9 +150,9 @@
     <Compile Include="mainPos\formChange.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\Admin\moduleAddProduct.vb" />
-    <Compile Include="modules\Admin\moduleAddEmployee.vb" />
-    <Compile Include="modules\Admin\moduleAddSupplier.vb" />
+    <Compile Include="modules\Admin\moduleProduct.vb" />
+    <Compile Include="modules\Admin\moduleEmployee.vb" />
+    <Compile Include="modules\Admin\moduleSupplier.vb" />
     <Compile Include="modules\Admin\moduleAdminStatistics.vb" />
     <Compile Include="modules\Database\connectionModule.vb" />
     <Compile Include="loginPos\formLogin.vb">
@@ -224,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mainAdmin\Update\formUpdateProduct.resx">
       <DependentUpon>formUpdateProduct.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainAdmin\Update\formUpdateSupplier.resx">
+      <DependentUpon>formUpdateSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainPos\formCashTender.resx">
       <DependentUpon>formCashTender.vb</DependentUpon>
