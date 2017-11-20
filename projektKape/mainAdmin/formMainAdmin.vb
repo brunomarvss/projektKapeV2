@@ -38,77 +38,10 @@ Public Class formMainAdmin
     Public totalRaw = "", totalSRP = "", totalIncome As String = ""
 
 
+
     Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
         labelTimeAdmin.Text = Format(Now, "yyyy-MM-dd    hh:mm:ss")
     End Sub
-
-    ''  Update selected item on a list  ''
-    Private Sub listProducts_DoubleClick(sender As Object, e As EventArgs) Handles listProducts.DoubleClick
-        Try
-            Dim item As ListView.SelectedListViewItemCollection = listProducts.SelectedItems
-            Dim items As ListViewItem
-            Dim i As Integer = 0
-            prodID = ""
-            supplierCompany = ""
-
-            formUpdateProduct.Dispose()
-
-            For Each items In item
-                ''  Get only the data of first colume
-                prodID = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtBrand.Text = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtGeneric.Text = items.SubItems(i).Text
-                i += 1 : prodQty = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtSupplier.Text = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtRawPrice.Text = items.SubItems(i).Text
-                i += 1 : formUpdateProduct.txtSRP.Text = items.SubItems(i).Text
-            Next
-
-            formUpdateProduct.ShowDialog()
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
-    Private Sub listEmployee_DoubleClick(sender As Object, e As EventArgs) Handles listEmployee.DoubleClick
-        Try
-            Dim item As ListView.SelectedListViewItemCollection = listEmployee.SelectedItems
-            Dim items As ListViewItem
-            Dim i As Integer = 0
-            employeeID = ""
-
-            For Each items In item
-                ''  Get only the data of first colume
-                employeeID = items.SubItems(i).Text
-            Next
-
-            selectedSearchType = "AND ID=" + employeeID
-            Call getEmployeeData()
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
-    Private Sub listSupplier_DoubleClick(sender As Object, e As EventArgs) Handles listSupplier.DoubleClick
-        Try
-            Dim item As ListView.SelectedListViewItemCollection = listSupplier.SelectedItems
-            Dim items As ListViewItem
-            Dim i As Integer = 0
-            supplierCompany = ""
-
-            For Each items In item
-                ''  Get only the data of first colume
-                supplierCompany = items.SubItems(i).Text
-            Next
-
-            Call getSupplierData()
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
-
-
     Private Sub TimerStats_Tick(sender As Object, e As EventArgs) Handles TimerStats.Tick
         'StatDaily.Value = StatDaily.Value + (TimeValue * 0.002)
         'MsgBox(StatDaily.Value)
@@ -157,6 +90,8 @@ Public Class formMainAdmin
     End Sub
 
 
+
+    ''  Reload * data/s from the database
     Sub refreshDashboard()
         Dim dateString As String = "#09/03/2017#"
         'MsgBox(DateAndTime.Weekday(dateString))
@@ -275,10 +210,126 @@ Public Class formMainAdmin
     End Sub
 
 
+    ''  GET unique ID for selected items/products etc.  ''
+    Sub getProductData()
+        Try
+            Dim item As ListView.SelectedListViewItemCollection = listProducts.SelectedItems
+            Dim items As ListViewItem
+            Dim i As Integer = 0
+            prodID = ""
+            supplierCompany = ""
+
+
+            For Each items In item
+                ''  Get only the data of first colume
+                prodID = items.SubItems(i).Text
+                i += 1 : formUpdateProduct.txtBrand.Text = items.SubItems(i).Text
+                i += 1 : formUpdateProduct.txtGeneric.Text = items.SubItems(i).Text
+                i += 1 : prodQty = items.SubItems(i).Text
+                i += 1 : formUpdateProduct.txtSupplier.Text = items.SubItems(i).Text
+                i += 1 : formUpdateProduct.txtRawPrice.Text = items.SubItems(i).Text
+                i += 1 : formUpdateProduct.txtSRP.Text = items.SubItems(i).Text
+            Next
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
     Sub getEmployeeData()
-        ''  Declares the variable only on adding employees
-        Dim getLname = "", getMname = "", getFname = "", getSuffix = "", getContact = "", getAddress = "", getCity = "", getProvince = "", getJob As String = ""
-        Dim setLname = "", setMname = "", setFname = "", setSuffix = "", setContact = "", setAddress = "", setCity = "", setProvince = "", setJob As String = ""
+        Try
+            Dim item As ListView.SelectedListViewItemCollection = listEmployee.SelectedItems
+            Dim items As ListViewItem
+            Dim i As Integer = 0
+            employeeID = ""
+
+            For Each items In item
+                ''  Get only the data of first colume
+                employeeID = items.SubItems(i).Text
+            Next
+
+            selectedSearchType = "AND ID=" + employeeID
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+    Sub getSupplierData()
+        Try
+            Dim item As ListView.SelectedListViewItemCollection = listSupplier.SelectedItems
+            Dim items As ListViewItem
+            Dim i As Integer = 0
+            supplierCompany = ""
+
+            For Each items In item
+                ''  Get only the data of first colume
+                supplierCompany = items.SubItems(i).Text
+            Next
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+
+
+
+    Private Sub listProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listProducts.SelectedIndexChanged
+        Call getProductData()
+        MsgBox(prodID)
+    End Sub
+    Private Sub listEmployees_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listEmployee.SelectedIndexChanged
+        Call getEmployeeData()
+    End Sub
+    Private Sub listSupplier_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listSupplier.SelectedIndexChanged
+        Call getSupplierData()
+    End Sub
+
+    ''  SELECTION of ITEM first before commit of REMOVAL  ''
+    Private Sub listProducts_Click(sender As Object, e As EventArgs) Handles listProducts.Click
+        Call getProductData()
+    End Sub
+    Private Sub listEmployee_Click(sender As Object, e As EventArgs) Handles listEmployee.Click
+        Call getEmployeeData()
+    End Sub
+    Private Sub listSupplier_Click(sender As Object, e As EventArgs) Handles listSupplier.Click
+        Call getSupplierData()
+    End Sub
+
+
+
+    ''  CREATION of items/products etc.  ''
+    Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
+        formAddProduct.Dispose()
+        formAddProduct.ShowDialog()
+    End Sub
+    Private Sub btnAddStock_Click(sender As Object, e As EventArgs) Handles btnAddStock.Click
+        MsgBox("Double click an item in the listview to add a stock.", vbInformation)
+
+    End Sub
+    Private Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
+        formAddEmployee.Dispose()
+        formAddEmployee.ShowDialog()
+    End Sub
+    Private Sub btnAddSupplier_Click(sender As Object, e As EventArgs) Handles btnAddSupplier.Click
+        formAddSupplier.Dispose()
+        formAddSupplier.ShowDialog()
+    End Sub
+
+
+
+    ''  UPDATE selected item on a list  ''
+    Private Sub listProducts_DoubleClick(sender As Object, e As EventArgs) Handles listProducts.DoubleClick
+        Try
+            formUpdateProduct.Dispose()
+            Call getProductData()
+            formUpdateProduct.ShowDialog()
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+    Private Sub listEmployee_DoubleClick(sender As Object, e As EventArgs) Handles listEmployee.DoubleClick
+        ''  GET first unique ID for identification of selected item
+        Call getProductData()
 
         Try
             rs = New ADODB.Recordset
@@ -311,10 +362,9 @@ Public Class formMainAdmin
             MsgBox(ex.ToString)
         End Try
     End Sub
-    Sub getSupplierData()
-        ''  Declares the variable only on adding suppliers
-        Dim getLname = "", getFname = "", getSuffix = "", getContact = "", getAddress = "", getCity = "", getProvince = "", getCompany As String = ""
-        Dim setLname = "", setFname = "", setSuffix = "", setContact = "", setAddress = "", setCity = "", setProvince = "", setCompany As String = ""
+    Private Sub listSupplier_DoubleClick(sender As Object, e As EventArgs) Handles listSupplier.DoubleClick
+        ''  GET first unique ID for identification of selected item
+        Call getProductData()
 
         Try
             rs = New ADODB.Recordset
@@ -346,25 +396,85 @@ Public Class formMainAdmin
             MsgBox(ex.ToString)
         End Try
     End Sub
-    Private Sub btnAddStock_Click(sender As Object, e As EventArgs)
-        MsgBox("Double click an item in the listview to add a stock.", vbInformation)
 
+
+
+    ''  DELETION of selected items/products etc.  "
+    Private Sub btnDelProduct_Click(sender As Object, e As EventArgs) Handles btnDelProduct.Click
+        Try
+            rs = New ADODB.Recordset
+
+            If MessageBox.Show("DO YOU WANT TO DELETE THIS REGISTERED PRODUCT ITEM?", "ECT Pharmacy", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                With rs
+                    If .State <> 0 Then .Close()
+                    .Open("DELETE FROM Products " +
+                          "WHERE ID =" + prodID + ";", cn, 1, 2)
+
+                    If .State <> 0 Then .Close()
+                    .Open("DELETE FROM Inventory " +
+                          "WHERE ID =" + prodID + ";", cn, 1, 2)
+
+                End With
+
+                MsgBox("RECORD DELETED SUCCESSFUL!", vbInformation, "ECT Pharmacy")
+                Call refreshProductList()
+
+            Else
+                Exit Sub
+
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
+    Private Sub btnDelEmployee_Click(sender As Object, e As EventArgs) Handles btnDelEmployee.Click
+        Try
+            rs = New ADODB.Recordset
 
+            If MessageBox.Show("DO YOU WANT TO DELETE THIS REGISTERED EMPLOYEE?", "ECT Pharmacy", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                With rs
+                    If .State <> 0 Then .Close()
+                    .Open("DELETE FROM Employees " +
+                          "WHERE ID =" + employeeID + ";", cn, 1, 2)
 
+                End With
 
-    ''  Event for addition of items/products etc.  ''
-    Private Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
-        formAddEmployee.Dispose()
-        formAddEmployee.ShowDialog()
+                MsgBox("RECORD DELETED SUCCESSFUL!", vbInformation, "ECT Pharmacy")
+                Call refreshEmployeeList()
+
+            Else
+                Exit Sub
+
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
-    Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
-        formAddProduct.Dispose()
-        formAddProduct.ShowDialog()
-    End Sub
-    Private Sub btnAddSupplier_Click(sender As Object, e As EventArgs) Handles btnAddSupplier.Click
-        formAddSupplier.Dispose()
-        formAddSupplier.ShowDialog()
+    Private Sub btnDelSupplier_Click(sender As Object, e As EventArgs) Handles btnDelSupplier.Click
+        Try
+            rs = New ADODB.Recordset
+
+            If MessageBox.Show("DO YOU WANT TO DELETE THIS REGISTERED SUPPLIER?", "ECT Pharmacy", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                With rs
+                    If .State <> 0 Then .Close()
+                    .Open("DELETE FROM Suppliers " +
+                          "WHERE Company='" + supplierCompany + "';", cn, 1, 2)
+
+                End With
+
+                MsgBox("RECORD DELETED SUCCESSFUL!", vbInformation, "ECT Pharmacy")
+                Call refreshSupplierList()
+
+            Else
+                Exit Sub
+
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
     End Sub
 
 
@@ -465,6 +575,19 @@ Public Class formMainAdmin
 
 
 
+    ''  REPORT SECTION  ''
+    Private Sub comboSelectedReport_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboSelectedReport.SelectedIndexChanged
+        ''  Conditional statement based on what user desire to generate report
+        If comboSelectedReport.SelectedIndex.Equals(1) Then
+            comboSearchDay.Enabled = True : comboSearchMonth.Enabled = True : comboSearchYear.Enabled = True
+        ElseIf comboSelectedReport.SelectedIndex.Equals(2) Then
+            comboSearchDay.Enabled = False : comboSearchMonth.Enabled = True : comboSearchYear.Enabled = True
+        ElseIf comboSelectedReport.SelectedIndex.Equals(3) Then
+            comboSearchDay.Enabled = False : comboSearchMonth.Enabled = False : comboSearchYear.Enabled = True
+        Else
+            Exit Sub
+        End If
+    End Sub
     Private Sub btnViewReport_Click(sender As Object, e As EventArgs) Handles btnViewReport.Click
         ''  Close recent excel processes from "View Reports" Event triggered
         Call connectionModule.TerminateExcel()
@@ -786,19 +909,6 @@ Public Class formMainAdmin
         Else
             row += 2
             x = -1
-        End If
-    End Sub
-
-    Private Sub comboSelectedReport_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboSelectedReport.SelectedIndexChanged
-        ''  Conditional statement based on what user desire to generate report
-        If comboSelectedReport.SelectedIndex.Equals(1) Then
-            comboSearchDay.Enabled = True : comboSearchMonth.Enabled = True : comboSearchYear.Enabled = True
-        ElseIf comboSelectedReport.SelectedIndex.Equals(2) Then
-            comboSearchDay.Enabled = False : comboSearchMonth.Enabled = True : comboSearchYear.Enabled = True
-        ElseIf comboSelectedReport.SelectedIndex.Equals(3) Then
-            comboSearchDay.Enabled = False : comboSearchMonth.Enabled = False : comboSearchYear.Enabled = True
-        Else
-            Exit Sub
         End If
     End Sub
 End Class
