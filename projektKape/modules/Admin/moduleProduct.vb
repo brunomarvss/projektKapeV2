@@ -3,9 +3,13 @@ Module moduleProduct
     Sub ResetDefaultAddProductTextFields()
         formAddProduct.txtBrand.Text = "Brand Name"
         formAddProduct.txtGeneric.Text = "Generic Name"
-        formAddProduct.txtQty.Text = "Item Quantity"
+
         formAddProduct.txtRawPrice.Text = "Raw Price"
         formAddProduct.txtSRP.Text = "SRP"
+
+        formAddProduct.txtQty.Text = "Item Quantity"
+        formAddProduct.txtReorderLvl.Text = "Reorder Level"
+        formAddProduct.txtReorderQty.Text = "Reorder Quantity"
     End Sub
     Sub ResetDefaultUpdateProductTextFields()
         formUpdateProduct.txtBrand.Text = "Brand Name"
@@ -53,19 +57,7 @@ Module moduleProduct
             Exit Sub
         End If
 
-        If Not IsNumeric(formAddProduct.txtQty.Text) Then
-            MsgBox("'Item quantity' input must be numbers only", vbCritical, "Error")
-            formAddProduct.txtQty.Text = "0"
-            formAddProduct.txtQty.Select()
-            Exit Sub
 
-        ElseIf Val(formAddProduct.txtQty.Text) <= 0 Then
-            MsgBox("'Item quantity' input must be more than or equal to value of 1", vbCritical, "Error")
-            formAddProduct.txtQty.Text = "0"
-            formAddProduct.txtQty.Select()
-            Exit Sub
-
-        End If
 
         If formAddProduct.comboSupplierList.SelectedItem.Equals("(Select One Supplier)") Then
             MsgBox("Select designated supplier for this product item", vbCritical, "Error")
@@ -75,13 +67,13 @@ Module moduleProduct
 
         ''  Auto two decimal places when text field leaves
         If Not IsNumeric(formAddProduct.txtRawPrice.Text) Then
-            MsgBox("'Raw price' input must be numbers only", vbCritical, "Error")
+            MsgBox("'Raw price' input must not be blank and numbers only", vbCritical, "Error")
             formAddProduct.txtRawPrice.Text = ""
             formAddProduct.txtRawPrice.Select()
             Exit Sub
 
-        ElseIf Val(formAddProduct.txtRawPrice.Text) <= 0 Then
-            MsgBox("'Raw price' input must be more than or equal to value of 1", vbCritical, "Error")
+        ElseIf Val(formAddProduct.txtRawPrice.Text) < 0 Then
+            MsgBox("'Raw price' input must be more than to value of 1", vbCritical, "Error")
             formAddProduct.txtRawPrice.Text = ""
             formAddProduct.txtRawPrice.Select()
             Exit Sub
@@ -91,19 +83,64 @@ Module moduleProduct
         End If
 
         If Not IsNumeric(formAddProduct.txtSRP.Text) Then
-            MsgBox("'SRP' input must be numbers only", vbCritical, "Error")
+            MsgBox("'SRP' input must not be blank and numbers only", vbCritical, "Error")
             formAddProduct.txtSRP.Text = ""
             formAddProduct.txtSRP.Select()
             Exit Sub
 
-        ElseIf Val(formAddProduct.txtSRP.Text) <= 0 Then
-            MsgBox("'SRP' input must be more than or equal to value of 1", vbCritical, "Error")
+        ElseIf Val(formAddProduct.txtSRP.Text) < 0 Then
+            MsgBox("'SRP' input must be more than to value of 0", vbCritical, "Error")
             formAddProduct.txtSRP.Text = ""
             formAddProduct.txtSRP.Select()
             Exit Sub
 
         Else
             formAddProduct.txtSRP.Text = Format(Val(formAddProduct.txtSRP.Text), "0.00")
+        End If
+
+
+
+        ''  Settings for product stocks
+        If Not IsNumeric(formAddProduct.txtQty.Text) Then
+            MsgBox("'Item quantity' input must not be blank and numbers only", vbCritical, "Error")
+            formAddProduct.txtQty.Text = "0"
+            formAddProduct.txtQty.Select()
+            Exit Sub
+
+        ElseIf Val(formAddProduct.txtQty.Text) < 0 Then
+            MsgBox("'Item quantity' input must be more than to value of 0", vbCritical, "Error")
+            formAddProduct.txtQty.Text = "0"
+            formAddProduct.txtQty.Select()
+            Exit Sub
+
+        End If
+
+        If Not IsNumeric(formAddProduct.txtReorderLvl.Text) Then
+            MsgBox("'Reorder Level' input must not be blank and numbers only", vbCritical, "Error")
+            formAddProduct.txtReorderLvl.Text = "0"
+            formAddProduct.txtReorderLvl.Select()
+            Exit Sub
+
+        ElseIf (Val(formAddProduct.txtReorderLvl.Text) < 0) Or (Val(formAddProduct.txtReorderLvl.Text) >= Val(formAddProduct.txtQty.Text)) Then
+            MsgBox("'Reorder Level' input must be more than to zero and less than to quantity", vbCritical, "Error")
+            formAddProduct.txtReorderLvl.Text = "0"
+            formAddProduct.txtReorderLvl.Select()
+            Exit Sub
+
+        End If
+
+        If Not IsNumeric(formAddProduct.txtReorderQty.Text) Then
+            MsgBox("'Reorder quantity' input must not be blank and numbers only", vbCritical, "Error")
+            formAddProduct.txtReorderQty.Text = "0"
+            formAddProduct.txtReorderQty.Select()
+            Exit Sub
+
+        ElseIf Val(formAddProduct.txtReorderQty.Text) < 0 Then
+            MsgBox("'Reorder quantity' input must be more than to value of 0", vbCritical, "Error")
+            formAddProduct.txtReorderQty.Text = "0"
+            formAddProduct.txtReorderQty.Select()
+            Exit Sub
+
         End If
 
         Call AddProduct()
@@ -125,13 +162,13 @@ Module moduleProduct
 
         ''  Auto two decimal places when text field leaves
         If Not IsNumeric(formUpdateProduct.txtRawPrice.Text) Then
-            MsgBox("'Raw price' input must be numbers only", vbCritical, "Error")
+            MsgBox("'Raw price' input must not be blank and numbers only", vbCritical, "Error")
             formUpdateProduct.txtRawPrice.Text = ""
             formUpdateProduct.txtRawPrice.Select()
             Exit Sub
 
-        ElseIf Val(formUpdateProduct.txtRawPrice.Text) <= 0 Then
-            MsgBox("'Raw price' input must be more than or equal to value of 1", vbCritical, "Error")
+        ElseIf Val(formUpdateProduct.txtRawPrice.Text) < 0 Then
+            MsgBox("'Raw price' input must be more than to value of 0", vbCritical, "Error")
             formUpdateProduct.txtRawPrice.Text = ""
             formUpdateProduct.txtRawPrice.Select()
             Exit Sub
@@ -141,13 +178,13 @@ Module moduleProduct
         End If
 
         If Not IsNumeric(formUpdateProduct.txtSRP.Text) Then
-            MsgBox("'SRP' input must be numbers only", vbCritical, "Error")
+            MsgBox("'SRP' input must not be blank and numbers only", vbCritical, "Error")
             formUpdateProduct.txtSRP.Text = ""
             formUpdateProduct.txtSRP.Select()
             Exit Sub
 
-        ElseIf Val(formUpdateProduct.txtSRP.Text) <= 0 Then
-            MsgBox("'SRP' input must be more than or equal to value of 1", vbCritical, "Error")
+        ElseIf Val(formUpdateProduct.txtSRP.Text) < 0 Then
+            MsgBox("'SRP' input must be more than to value of 0", vbCritical, "Error")
             formUpdateProduct.txtSRP.Text = ""
             formUpdateProduct.txtSRP.Select()
             Exit Sub
@@ -160,7 +197,7 @@ Module moduleProduct
     End Sub
     Sub AddProduct()
         ''  Declares the variable only on adding employees
-        Dim setBrand = "", setGeneric = "", setQty = "", setSupplier = "", setRawPrice = "", setSRP As String = ""
+        Dim setBrand = "", setGeneric = "", setQty = "", setReorderLvl = "", setReorderQty = "", setSupplier = "", setRawPrice = "", setSRP As String = ""
 
         Try
             rs = New ADODB.Recordset
@@ -170,13 +207,21 @@ Module moduleProduct
 
             setBrand = formAddProduct.txtBrand.Text.Trim
             setGeneric = formAddProduct.txtGeneric.Text.Trim
-            setQty = formAddProduct.txtQty.Text.Trim
 
             setRawPrice = formAddProduct.txtRawPrice.Text.Trim
             setSRP = formAddProduct.txtSRP.Text.Trim
 
+            setQty = formAddProduct.txtQty.Text.Trim
+            setReorderLvl = formAddProduct.txtReorderLvl.Text.Trim
+            setReorderQty = formAddProduct.txtReorderLvl.Text.Trim
+
+
             ''  Restrictions on text fields
-            If setBrand = "Brand Name" Or setGeneric = "Generic Name" Or setQty = "Item Quantity" Or setSupplier = "(Select One Supplier)" Or setRawPrice = "Raw Price" Or setSRP = "SRP" Then
+            If setBrand = "Brand Name" Or setGeneric = "Generic Name" Or
+                setReorderLvl = "Reorder Level" Or setReorderQty = "Reorder Quantity" Or
+                setQty = "Item Quantity" Or setSupplier = "(Select One Supplier)" Or
+                setRawPrice = "Raw Price" Or setSRP = "SRP" Then
+
                 MsgBox("You must fill up all fields before you commit saving of data/s", vbCritical, "Error")
                 Exit Sub
 
@@ -211,8 +256,8 @@ Module moduleProduct
 
                 ''  Set values of items CurrentLevel for notification on dashboard
                 If .State <> 0 Then .Close()
-                .Open("INSERT INTO Inventory (InitialLevel, CurrentLevel)" +
-                      "VALUES ('" + setQty + "','" + setQty + "');", cn, 1, 2)
+                .Open("INSERT INTO Inventory (InitialLevel, CurrentLevel, ReorderLevel, MinReorderQty)" +
+                      "VALUES ('" + setQty + "','" + setQty + "','" + setReorderLvl + "','" + setReorderQty + "');", cn, 1, 2)
 
                 MsgBox("Saving Successful!", MsgBoxStyle.Information, "Record Saved")
                 Call formMainAdmin.refreshProductList()

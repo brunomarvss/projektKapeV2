@@ -27,4 +27,15 @@ Public Class formAddProduct
         Call moduleProduct.restrictAddProducts()
     End Sub
 
+    Private Sub txtQty_Click(sender As Object, e As EventArgs) Handles txtQty.Click
+
+    End Sub
+
+    Private Sub txtGeneric_Click(sender As Object, e As EventArgs) Handles txtGeneric.Click
+
+    End Sub
+
+    Private Sub txtBrand_Click(sender As Object, e As EventArgs) Handles txtBrand.Click
+
+    End Sub
 End Class

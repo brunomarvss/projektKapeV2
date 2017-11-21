@@ -45,7 +45,6 @@ Partial Class formMainAdmin
         Me.comboSelectedReport = New MetroFramework.Controls.MetroComboBox()
         Me.lblYearly = New MetroFramework.Controls.MetroLabel()
         Me.lblMonthly = New MetroFramework.Controls.MetroLabel()
-        Me.lblWeekly = New MetroFramework.Controls.MetroLabel()
         Me.lblDaily = New MetroFramework.Controls.MetroLabel()
         Me.MetroTabPage2 = New MetroFramework.Controls.MetroTabPage()
         Me.btnDelProduct = New MetroFramework.Controls.MetroButton()
@@ -96,12 +95,14 @@ Partial Class formMainAdmin
         Me.MetroLabel9 = New MetroFramework.Controls.MetroLabel()
         Me.MetroLabel10 = New MetroFramework.Controls.MetroLabel()
         Me.TimerStats = New System.Windows.Forms.Timer(Me.components)
+        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.GroupBox1.SuspendLayout()
         Me.MetroTabControl1.SuspendLayout()
         Me.MetroTabPage1.SuspendLayout()
         Me.MetroTabPage2.SuspendLayout()
         Me.MetroTabPage3.SuspendLayout()
         Me.MetroTabPage4.SuspendLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'labelTimeAdmin
@@ -233,13 +234,14 @@ Partial Class formMainAdmin
         Me.MetroTabControl1.Location = New System.Drawing.Point(387, 110)
         Me.MetroTabControl1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.MetroTabControl1.Name = "MetroTabControl1"
-        Me.MetroTabControl1.SelectedIndex = 3
+        Me.MetroTabControl1.SelectedIndex = 1
         Me.MetroTabControl1.Size = New System.Drawing.Size(1381, 720)
         Me.MetroTabControl1.TabIndex = 33
         Me.MetroTabControl1.UseSelectable = True
         '
         'MetroTabPage1
         '
+        Me.MetroTabPage1.Controls.Add(Me.TrackBar1)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel14)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel15)
         Me.MetroTabPage1.Controls.Add(Me.MetroLabel16)
@@ -250,7 +252,6 @@ Partial Class formMainAdmin
         Me.MetroTabPage1.Controls.Add(Me.comboSelectedReport)
         Me.MetroTabPage1.Controls.Add(Me.lblYearly)
         Me.MetroTabPage1.Controls.Add(Me.lblMonthly)
-        Me.MetroTabPage1.Controls.Add(Me.lblWeekly)
         Me.MetroTabPage1.Controls.Add(Me.lblDaily)
         Me.MetroTabPage1.HorizontalScrollbarBarColor = True
         Me.MetroTabPage1.HorizontalScrollbarHighlightOnWheel = False
@@ -302,7 +303,7 @@ Partial Class formMainAdmin
         Me.comboSearchYear.FormattingEnabled = True
         Me.comboSearchYear.ItemHeight = 29
         Me.comboSearchYear.Items.AddRange(New Object() {"2017"})
-        Me.comboSearchYear.Location = New System.Drawing.Point(621, 224)
+        Me.comboSearchYear.Location = New System.Drawing.Point(621, 212)
         Me.comboSearchYear.Margin = New System.Windows.Forms.Padding(4)
         Me.comboSearchYear.Name = "comboSearchYear"
         Me.comboSearchYear.Size = New System.Drawing.Size(257, 35)
@@ -363,7 +364,7 @@ Partial Class formMainAdmin
         Me.lblYearly.AutoSize = True
         Me.lblYearly.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.lblYearly.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.lblYearly.Location = New System.Drawing.Point(440, 234)
+        Me.lblYearly.Location = New System.Drawing.Point(449, 222)
         Me.lblYearly.Name = "lblYearly"
         Me.lblYearly.Size = New System.Drawing.Size(87, 25)
         Me.lblYearly.TabIndex = 22
@@ -374,29 +375,18 @@ Partial Class formMainAdmin
         Me.lblMonthly.AutoSize = True
         Me.lblMonthly.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.lblMonthly.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.lblMonthly.Location = New System.Drawing.Point(440, 160)
+        Me.lblMonthly.Location = New System.Drawing.Point(449, 143)
         Me.lblMonthly.Name = "lblMonthly"
         Me.lblMonthly.Size = New System.Drawing.Size(109, 25)
         Me.lblMonthly.TabIndex = 21
         Me.lblMonthly.Text = "lblMonthly"
-        '
-        'lblWeekly
-        '
-        Me.lblWeekly.AutoSize = True
-        Me.lblWeekly.FontSize = MetroFramework.MetroLabelSize.Tall
-        Me.lblWeekly.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.lblWeekly.Location = New System.Drawing.Point(621, 103)
-        Me.lblWeekly.Name = "lblWeekly"
-        Me.lblWeekly.Size = New System.Drawing.Size(98, 25)
-        Me.lblWeekly.TabIndex = 20
-        Me.lblWeekly.Text = "lblWeekly"
         '
         'lblDaily
         '
         Me.lblDaily.AutoSize = True
         Me.lblDaily.FontSize = MetroFramework.MetroLabelSize.Tall
         Me.lblDaily.FontWeight = MetroFramework.MetroLabelWeight.Bold
-        Me.lblDaily.Location = New System.Drawing.Point(621, 27)
+        Me.lblDaily.Location = New System.Drawing.Point(449, 69)
         Me.lblDaily.Name = "lblDaily"
         Me.lblDaily.Size = New System.Drawing.Size(78, 25)
         Me.lblDaily.TabIndex = 19
@@ -968,6 +958,14 @@ Partial Class formMainAdmin
         '
         Me.TimerStats.Interval = 30
         '
+        'TrackBar1
+        '
+        Me.TrackBar1.Location = New System.Drawing.Point(121, 191)
+        Me.TrackBar1.Maximum = 3
+        Me.TrackBar1.Name = "TrackBar1"
+        Me.TrackBar1.Size = New System.Drawing.Size(257, 56)
+        Me.TrackBar1.TabIndex = 112
+        '
         'formMainAdmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -992,6 +990,7 @@ Partial Class formMainAdmin
         Me.MetroTabPage3.PerformLayout()
         Me.MetroTabPage4.ResumeLayout(False)
         Me.MetroTabPage4.PerformLayout()
+        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1056,7 +1055,6 @@ Partial Class formMainAdmin
     Friend WithEvents TimerStats As Timer
     Friend WithEvents lblYearly As MetroFramework.Controls.MetroLabel
     Friend WithEvents lblMonthly As MetroFramework.Controls.MetroLabel
-    Friend WithEvents lblWeekly As MetroFramework.Controls.MetroLabel
     Friend WithEvents lblDaily As MetroFramework.Controls.MetroLabel
     Friend WithEvents MetroLabel13 As MetroFramework.Controls.MetroLabel
     Friend WithEvents comboSelectedReport As MetroFramework.Controls.MetroComboBox
@@ -1070,4 +1068,5 @@ Partial Class formMainAdmin
     Friend WithEvents btnDelProduct As MetroFramework.Controls.MetroButton
     Friend WithEvents btnDelEmployee As MetroFramework.Controls.MetroButton
     Friend WithEvents btnDelSupplier As MetroFramework.Controls.MetroButton
+    Friend WithEvents TrackBar1 As TrackBar
 End Class

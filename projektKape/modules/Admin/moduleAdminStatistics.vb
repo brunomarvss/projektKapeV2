@@ -7,7 +7,6 @@
 
             ''  Clear all recent datas
             formMainAdmin.lblDaily.Text = Nothing
-            formMainAdmin.lblWeekly.Text = Nothing
             formMainAdmin.lblMonthly.Text = Nothing
             formMainAdmin.lblYearly.Text = Nothing
 
@@ -51,7 +50,6 @@
                 End While
 
                 formMainAdmin.lblDaily.Text = Val(TotalSalesDaily)
-                formMainAdmin.lblWeekly.Text = Val(TotalSalesWeekly)
                 formMainAdmin.lblMonthly.Text = Val(TotalSalesMonthly)
                 formMainAdmin.lblYearly.Text = Val(TotalSalesYearly)
                 .Close()

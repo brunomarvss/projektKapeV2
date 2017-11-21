@@ -45,7 +45,7 @@
         End If
 
         If Not IsNumeric(formAddSupplier.txtContact.Text) Then
-            MsgBox("'Contact Number' input must be numbers only", vbCritical, "Error")
+            MsgBox("'Contact Number' input must not be blank and numbers only", vbCritical, "Error")
             formAddSupplier.txtContact.Text = ""
             formAddSupplier.txtContact.Select()
             Exit Sub
@@ -115,7 +115,7 @@
         End If
 
         If Not IsNumeric(formUpdateSupplier.txtContact.Text) Then
-            MsgBox("'Contact Number' input must be numbers only", vbCritical, "Error")
+            MsgBox("'Contact Number' input must not be blank and numbers only", vbCritical, "Error")
             formUpdateSupplier.txtContact.Text = ""
             formUpdateSupplier.txtContact.Select()
             Exit Sub

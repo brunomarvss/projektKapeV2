@@ -5,7 +5,7 @@ Public Class formMainAdmin
     Dim selectedSearchType As String = ""
     Dim TimeValue As Decimal = 1000.0
     Public prodID = "", prodQty = "", employeeID = "", supplierCompany As String = ""
-    Dim getSuffix = "", setSuffix As String = ""
+    Dim setprodStatus = "", setSuffix As String = ""
 
     ''  Declaration of values used on initialization of "EXCEL WORKBOOK"
     Dim xl As New Excel.Application
@@ -117,6 +117,18 @@ Public Class formMainAdmin
                 selectedSearchType = ""
 
                 While .EOF = False
+                    MsgBox(.Fields("Level").Value)
+                    If Val(.Fields("CurrentLevel").Value) < Val(.Fields("ReorderLevel").Value) Then
+                        setprodStatus = "OK"
+
+                    ElseIf Val(.Fields("CurrentLevel").Value) >= Val(.Fields("ReorderLevel").Value) Then
+                        setprodStatus = "LOW"
+
+                    Else
+                        setprodStatus = "OUT OF STOCK"
+
+                    End If
+
                     listItems = listProducts.Items.Add(.Fields("Products.ID").Value)
                     listItems.SubItems.Insert(1, New ListViewItem.ListViewSubItem(Nothing, .Fields("BrandName").Value))
                     listItems.SubItems.Insert(2, New ListViewItem.ListViewSubItem(Nothing, .Fields("GenericName").Value))
@@ -124,6 +136,7 @@ Public Class formMainAdmin
                     listItems.SubItems.Insert(4, New ListViewItem.ListViewSubItem(Nothing, .Fields("Company").Value))
                     listItems.SubItems.Insert(5, New ListViewItem.ListViewSubItem(Nothing, .Fields("RawPrice").Value))
                     listItems.SubItems.Insert(6, New ListViewItem.ListViewSubItem(Nothing, .Fields("SRP").Value))
+                    listItems.SubItems.Insert(6, New ListViewItem.ListViewSubItem(Nothing, setprodStatus))
                     .MoveNext()
                 End While
                 .Close()
@@ -148,12 +161,12 @@ Public Class formMainAdmin
 
                 While .EOF = False
                     ''  Initials variable to clear recent value
-                    getSuffix = vbNull
-                    getSuffix = .Fields("Suffix").Value
+                    setSuffix = vbNull
+                    setSuffix = .Fields("Suffix").Value
 
                     ''  Checks if variable is not null 
-                    If Not getSuffix.Equals("<N/A>") Then
-                        setSuffix = " " + getSuffix + ", "
+                    If Not setSuffix.Equals("<N/A>") Then
+                        setSuffix = " " + setSuffix + ", "
                     Else
                         setSuffix = ", "
                     End If
@@ -185,12 +198,12 @@ Public Class formMainAdmin
 
                 While .EOF = False
                     ''  Initials variable to clear recent value
-                    getSuffix = vbNull
-                    getSuffix = .Fields("Suffix").Value
+                    setSuffix = vbNull
+                    setSuffix = .Fields("Suffix").Value
 
                     ''  Checks if variable is not null 
-                    If Not getSuffix.Equals("<N/A>") Then
-                        setSuffix = " " + getSuffix + ", "
+                    If Not setSuffix.Equals("<N/A>") Then
+                        setSuffix = " " + setSuffix + ", "
                     Else
                         setSuffix = ", "
                     End If
